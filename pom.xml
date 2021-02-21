@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.30</version>
+			<version>8.0.22</version>
 		</dependency>
 		<!--http-->
 		<dependency>
@@ -98,7 +98,7 @@
 			<artifactId>swagger-bootstrap-ui</artifactId>
 			<version>1.6</version>
 		</dependency>
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<finalName>jshERP</finalName>
