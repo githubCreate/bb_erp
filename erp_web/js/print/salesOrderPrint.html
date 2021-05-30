@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="ProgId" content="Excel.Sheet"/>
+    <script src="/js/jquery-1.8.0.min.js"></script>
+    <script src="/js/easyui/jquery.easyui.min.js"></script>
+    <script src="/js/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script src="/js/print/watermark.js"></script>
+    <script src="/js/print/RMBUtils.js"></script>
+    <link rel="stylesheet" type="text/css" href="/js/easyui/themes/gray/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="/js/easyui/themes/icon.css"/>
+    <style type="text/css" media="print">
+        @page {
+            margin: 1.00in 0.75in 1.00in 0.75in;
+            mso-header-margin: 0.50in;
+            mso-footer-margin: 0.50in;
+            margin-bottom: 5mm;
+            margin-top: 5mm
+        }
+
+        tr {
+            mso-height-source: auto;
+            mso-ruby-visibility: none;
+        }
+
+        col {
+            mso-width-source: auto;
+            mso-ruby-visibility: none;
+        }
+
+        br {
+            mso-data-placement: same-cell;
+        }
+
+        td {
+            mso-style-parent: style0;
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            mso-number-format: "General";
+            vertical-align: middle;
+            white-space: nowrap;
+            mso-rotate: 0;
+            mso-pattern: auto;
+            mso-background-source: auto;
+            color: #000000;
+            font-size: 11.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: 宋体;
+            mso-generic-font-family: auto;
+            mso-font-charset: 134;
+            border: none;
+            mso-protection: locked visible;
+        }
+    </style>
+</head>
+<body link="blue" vlink="purple">
+<!--startprint-->
+<table border="0" cellpadding="0" cellspacing="0" style='width:877.00pt;border-collapse:collapse;table-layout:fixed;'>
+    <tr height="17" align="center">
+        <td height="17" id="companyName" colspan="8" style="font-size:20px;font-weight:bold"></td>
+    </tr>
+    <tr height="34" align="center">
+        <td height="34" colspan="8"><span id="subTypeShow" style="font-size:25px;font-weight:bold"></span></td>
+    </tr>
+    <tr height="15">
+        <td colspan="3">
+            客户名称：<span id="OrganIdShow"></span>
+        </td>
+        <td colspan="3" style='border-right:none;border-bottom:none;'>日期:<span id="OperTimeShow"></span>
+        </td>
+        <td colspan="3" style='border-right:none;border-bottom:none;'>NO.<span id="NumberShow"></span></td>
+        <td colspan="3" style='border-right:none;border-bottom:none;'>销售人员:<span id="salespersonShow"></span></td>
+    </tr>
+    <tr>
+        <td colspan="10">
+            <!-- 商品列表table -->
+            <table id="materialDataShow" style="top:100px;width:100%;border-bottom-color:#FFFFFF"></table>
+        </td>
+    </tr>
+    <tr>
+        <td  colspan="10">
+            备注：1.请收货后及时验收，有质量问题7天内反馈，逾期视为质量符合要求。<br/>&nbsp;&nbsp;&nbsp;2.特殊定制产品，因已寄送样品，除与样品不一致外，不接受退货或换货，敬请谅解。<br/>&nbsp;&nbsp;&nbsp;3.谢谢您的惠顾，期待您的再次惠顾，河北xxx有限公司电话：13699999999.
+        </td>
+    <tr/>
+    <tr height="80"></tr>
+    <tr>
+        <td height="54" colspan="2"></td>
+        <td>供应方及<br/>经手人(签章):</td>
+        <td colspan="5"></td>
+        <td>收货方及<br/>经手人(签章):</td>
+        <td colspan="4"></td>
+    </tr>
+</table>
+<!--endprint-->
+<script type="text/javascript">
+    $('#materialDataShow').datagrid({
+        rownumbers: false,
+        //动画效果
+        animate: false,
+        //选中单行
+        singleSelect: false,
+        collapsible: false,
+        selectOnCheck: false,
+        pagination: false,
+        //交替出现背景
+        striped: false,
+        showFooter: true,
+        viewrecords: true,
+        multiselect: true,
+        fitColumns: true,
+        scrollbarSize: 0,
+        columns: [[
+            {title: '名称', field: 'name', align: 'center', halign: 'center', width: 150},
+            {title: '规格', field: 'standard', align: 'center', halign: 'center', width: 100},
+            {title: '型号', field: 'model', align: 'center', halign: 'center', width: 100},
+            {title: '扩展信息', field: 'materialOther', align: 'center', halign: 'center', width: 100},
+            {title: '单位', field: 'Unit', align: 'center', halign: 'center', width: 50},
+            {title: '数量', field: 'OperNumber', align: 'center', halign: 'center', width: 50},
+            {title: '单价', field: 'UnitPrice', align: 'center', halign: 'center', width: 100},
+            {title: '金额', field: 'AllPrice', align: 'center', halign: 'center', width: 100},
+            {title: '备注', field: 'Remark', align: 'center', halign: 'center', width: 150}
+        ]],
+        onLoadSuccess: function () {
+            var merges = [{
+                index: 0,
+                colspan: 6,
+                field: 'standard'
+            }];
+            for (var i = 0; i < merges.length; i++) {
+                $('#materialDataShow').datagrid('mergeCells', {
+                    index: merges[i].index,
+                    field: merges[i].field,
+                    colspan: merges[i].colspan,
+                    type: 'footer'
+                });
+            }
+        },
+        onLoadError: function () {
+            $.messager.alert('页面加载提示', '页面加载异常，请稍后再试！', 'error');
+            return;
+        }
+    });
+
+    function doPrint() {
+        bdhtml = window.document.body.innerHTML;
+        sprnstr = "<!--startprint-->";
+        eprnstr = "<!--endprint-->";
+        prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17);
+        prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));
+        window.document.body.innerHTML = prnhtml;
+        watermark({"watermark_txt": "河北省xxx有限公司"});
+        window.print();
+
+    }
+
+    $(document).ready(function () {
+        //公司名称
+        var companyData = localStorage.getItem("companyData");
+        $('#companyName').text(eval("(" + companyData + ")")[0].companyName);// 公司名称
+        //客户信息
+        var resData = localStorage.getItem("res");
+        var data = eval("(" + resData + ")");
+        $('#OrganIdShow').text(data.organName);// 客户名称
+        $("#NumberShow").text(data.number);// 单据编号
+        $("#OperTimeShow").text(data.operTimeStr);// 单据日期
+        $("#subTypeShow").text(data.subType);// 单据日期
+        $("#salespersonShow").text(localStorage.getItem("names"));// 销售人员
+        //货物信息
+        var tableData = localStorage.getItem("tData");
+        var tableObj = eval('(' + tableData + ')');
+        tableObj.footer[0].name = "总计：";
+        tableObj.footer[0].standard = changeMoneyToChinese(tableObj.footer[0].AllPrice);
+
+        $("#materialDataShow").datagrid('loadData', tableObj);
+
+        doPrint();
+    });
+</script>
+</body>
+</html>

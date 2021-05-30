@@ -18,8 +18,9 @@
 </head>
 <body>
     <script type="text/javascript">
-        var tableString = localStorage.getItem("tableString");
-        document.write(tableString);
+        var resData = localStorage.getItem("res");
+        // var tableString = localStorage.getItem("tableString");
+        document.write(resData);
         var rowLen = $(".datagrid .datagrid-view2 .datagrid-body .datagrid-row").length;
         if(rowLen > 7) {
             var allHeight = (rowLen+2)*35;

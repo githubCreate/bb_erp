@@ -7,15 +7,6 @@
 		s.parentNode.insertBefore(hm, s);
 	})();
 
-	//全局配置
-	$.ajaxSetup({
-		beforeSend: function(jqXHR, settings) {
-			//在请求前给修改url（增加一个时间戳参数）
-			settings.url += settings.url.match(/\?/) ? "&" : "?";
-			settings.url += "t=" + new Date().getTime();
-		}
-	});
-
 	$.fn.serializeObject = function() {
 		var o = {};
 		var a = this.serializeArray();
@@ -151,6 +142,7 @@
                             info = array[0];
                         }
                     }
+					localStorage.setItem("companyData",JSON.stringify(array));
                 }
             },
             //此处添加错误处理

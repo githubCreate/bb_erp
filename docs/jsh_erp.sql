@@ -709,7 +709,7 @@ CREATE TABLE `jsh_platform_config` (
 -- ----------------------------
 -- Records of jsh_platform_config
 -- ----------------------------
-INSERT INTO `jsh_platform_config` VALUES ('1', 'platform_name', '平台名称', '华夏ERP');
+INSERT INTO `jsh_platform_config` VALUES ('1', 'platform_name', '平台名称', '葫芦娃ERP');
 INSERT INTO `jsh_platform_config` VALUES ('2', 'activation_code', '激活码', null);
 
 -- ----------------------------

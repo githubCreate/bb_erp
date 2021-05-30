@@ -8,7 +8,7 @@
 	<packaging>jar</packaging>
 
 	<name>jshERP</name>
-	<description>华夏ERP</description>
+	<description>葫芦娃ERP</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -51,10 +51,6 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.30</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 		<!--http-->
 		<dependency>
@@ -102,7 +98,7 @@
 			<artifactId>swagger-bootstrap-ui</artifactId>
 			<version>1.6</version>
 		</dependency>
-    </dependencies>
+	</dependencies>
 
 	<build>
 		<finalName>jshERP</finalName>

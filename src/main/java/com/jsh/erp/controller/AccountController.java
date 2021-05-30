@@ -179,12 +179,10 @@ public class AccountController {
      * @return
      */
     @GetMapping(value = "/getStatistics")
-    public BaseResponseInfo getStatistics(@RequestParam("name") String name,
-                                          @RequestParam("serialNo") String serialNo,
-                                          HttpServletRequest request) throws Exception {
+    public BaseResponseInfo getStatistics(HttpServletRequest request) throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
-            Map<String, Object> map = accountService.getStatistics(name, serialNo);
+            Map<String, Object> map = accountService.getStatistics();
             res.code = 200;
             res.data = map;
         } catch(Exception e){

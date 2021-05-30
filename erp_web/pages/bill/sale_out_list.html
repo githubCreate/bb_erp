@@ -230,7 +230,7 @@
         </tr>
     </table>
     <div id="dlg-buttons-show">
-        <a href="javascript:void(0)" id="printDepotHeadShow" class="easyui-linkbutton" iconCls="icon-print">打印</a>
+        <a href="javascript:void(0)" id="printSaleOutShow" class="easyui-linkbutton" iconCls="icon-print">打印</a>
         <a href="javascript:void(0)" id="cancelDepotHeadShow" class="easyui-linkbutton" iconCls="icon-cancel"
            onclick="javascript:$('#depotHeadDlgShow').dialog('close')">取消</a>
     </div>
@@ -442,6 +442,12 @@
         dgResize();
         toolbarStatus();
     }
+
+    //打印单据
+    $("#printSaleOutShow").off("click").on("click",function(){
+        window.open("../../../js/print/printSaleOut.html","location:No;status:No;help:No;dialogWidth:800px;dialogHeight:600px;scroll:auto;");
+    });
+
     //新增信息
     function addDepotHead() {
         if(checkPower()){
@@ -689,6 +695,7 @@
     //查看信息
     function showDepotHead(index) {
         var res = $("#tableData").datagrid("getRows")[index];
+        var dataRe = res;
         var manyAccountMoney = 0; //多账户合计-零售
         $("#NumberShow").text(res.number);
         $("#OperTimeShow").text(res.operTimeStr);
@@ -762,9 +769,11 @@
                 }
             }
             $("#OtherMoneyShow").text(otherMoneyShow +"总计："+ otherMoney + "元 "); //其它费用
-        }
-        else {
+            dataRe.OtherMoneyShow = otherMoneyShow;
+            dataRe.otherMShow = otherMoney;
+        }else {
             $("#OtherMoneyShow").text(otherMoney); //其它费用
+            dataRe.OtherMoneyShow = otherMoney;
         }
         $("#payTypeShow").text(res.payType);
         var TotalPrice = res.totalPrice;
@@ -792,10 +801,12 @@
                 data: {
                     personIDs: salesmanStr
                 },
-                success:function(res){
-                    if(res && res.code === 200){
-                        if(res.data) {
-                            $("#SalesmanShow").text(res.data.names); //销售人员列表
+                success:function(resD){
+                    if(resD && resD.code === 200){
+                        if(resD.data) {
+                            $("#SalesmanShow").text(resD.data.names); //销售人员列表
+                            dataRe.salesperson = resD.data.names;
+                            localStorage.setItem("res",JSON.stringify(dataRe));
                         }
                     }
                 },
@@ -804,6 +815,8 @@
                 }
             });
         }
+        dataRe.debt = debt;//本次欠款金额
+        localStorage.setItem("res",JSON.stringify(dataRe));
     }
     //初始化表格数据-商品列表-编辑状态
     function initTableData_material(type,TotalPrice) {
@@ -1030,6 +1043,7 @@
                     });
                     data.footer = array;
                     $("#materialDataShow").datagrid('loadData', data);
+                    localStorage.setItem("tData",JSON.stringify(data));
                 }
             },
             error:function() {

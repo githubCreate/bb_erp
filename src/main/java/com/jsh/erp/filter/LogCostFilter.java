@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 @WebFilter(filterName = "LogCostFilter", urlPatterns = {"/*"},
         initParams = {@WebInitParam(name = "ignoredUrl", value = ".css#.js#.jpg#.png#.gif#.ico"),
                       @WebInitParam(name = "filterPath",
-                              value = "/user/login#/user/registerUser#/v2/api-docs")})
+                              value = "/depotItem#/depotHead#/user/login#/user/registerUser#/v2/api-docs")})
 public class LogCostFilter implements Filter {
 
     private static final String FILTER_PATH = "filterPath";

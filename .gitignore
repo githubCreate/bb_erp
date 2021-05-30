@@ -17,5 +17,3 @@ hs_err_pid*
 
 **/*.iml
 
-logs.home_IS_UNDEFINED/
-dist/

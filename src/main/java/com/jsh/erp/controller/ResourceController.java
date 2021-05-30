@@ -18,12 +18,19 @@ import java.util.Map;
 import static com.jsh.erp.utils.ResponseJsonUtil.returnJson;
 
 /**
- * by jishenghua 2018-9-12 23:58:10 华夏erp
+ * by jishenghua 2018-9-12 23:58:10 葫芦娃ERP
  */
 @RestController
 public class ResourceController {
+    private Logger logger = LoggerFactory.getLogger(ResourceController.class);
+
     @Resource
     private CommonQueryManager configResourceManager;
+
+    @GetMapping(value = "/test/heart")
+    public JSONObject exitHeart(HttpServletRequest request)throws Exception {
+        return JsonUtils.ok();
+    }
 
     @GetMapping(value = "/{apiName}/info")
     public String getList(@PathVariable("apiName") String apiName,

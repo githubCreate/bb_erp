@@ -203,7 +203,7 @@
         </tr>
     </table>
     <div id="dlg-buttons-show">
-        <a href="javascript:void(0)" id="printDepotHeadShow" class="easyui-linkbutton" iconCls="icon-print">打印</a>
+        <a href="javascript:void(0)" id="printRetailBack" class="easyui-linkbutton" iconCls="icon-print">打印</a>
         <a href="javascript:void(0)" id="cancelDepotHeadShow" class="easyui-linkbutton" iconCls="icon-cancel"
            onclick="javascript:$('#depotHeadDlgShow').dialog('close')">取消</a>
     </div>
@@ -618,7 +618,18 @@
                 $("#depotHeadDlgShow .back-amount-show").text(0);
             }
         }
+        var getAmo = $("#getAmountShow").text();// 添加收款金额字段
+        var backAmo = $("#backAmountShow").text();// 添加收找零字段
+        res.getAmo = getAmo;
+        res.backAmo = backAmo;
+        localStorage.setItem("res",JSON.stringify(res));
     }
+
+    //打印单据
+    $("#printRetailBack").off("click").on("click",function(){
+        window.open("../../../js/print/printRetailBack.html","location:No;status:No;help:No;dialogWidth:800px;dialogHeight:600px;scroll:auto;");
+    });
+
     //初始化表格数据-商品列表-编辑状态
     function initTableData_material(type,TotalPrice) {
         var self = this;
@@ -836,6 +847,7 @@
                     });
                     data.footer = array;
                     $("#materialDataShow").datagrid('loadData', data);
+                    localStorage.setItem("tData",JSON.stringify(data));
                 }
             },
             error:function() {

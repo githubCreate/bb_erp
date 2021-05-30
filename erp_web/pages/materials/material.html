@@ -436,7 +436,7 @@
                         title: '库存', field: 'stock', width: 70, formatter: function (value, rec) {
                             var str = '';
                             str += '<span title="查看库存及明细" class="n-link" ' +
-                                'onclick="findStockList(' + rec.id + ',\'' + rec.mBarCode + '\',\'' + rec.name + '\');">' + rec.stock + '</span>';
+                                'onclick="findStockList(' + rec.id + ',' + rec.mBarCode + ',\'' + rec.name + '\');">' + rec.stock + '</span>';
                             return str;
                         }
                     },
@@ -547,7 +547,6 @@
                         }
                     },
                     {title: '类型', field: 'Type', width: 100},
-                    {title: '仓库名称', field: 'depotName', width: 80},
                     {title: '数量', field: 'BasicNumber', width: 80},
                     {title: '日期', field: 'OperTime', width: 180, formatter: function (value) {
                             return formatTime(value, 'Y-M-D h:m:s');
@@ -1312,7 +1311,7 @@
                         if(type == "edit"){
                             $.ajax({
                                 type: "get",
-                                url: "../../../pages/template/init_depot_list.html?3232",
+                                url: "../../../pages/template/init_depot_list.html?2121",
                                 async: false,
                                 success: function (tem) {
                                     if (tem) {

@@ -486,9 +486,9 @@
     function showDepotHead(index) {
         var res = $("#tableData").datagrid("getRows")[index];
         var manyAccountMoney = 0; //多账户合计-零售
-        $("#NumberShow").text(res.number);
-        $("#OperTimeShow").text(res.operTimeStr);
-        $('#OrganIdShow').text(res.organName);
+        $("#NumberShow").text(res.number);// 单据编号
+        $("#OperTimeShow").text(res.operTimeStr);// 单据日期
+        $('#OrganIdShow').text(res.organName);// 客户名称
         if(res.accountName){
             $("#AccountIdShow").text(res.accountName); //结算账户
         } else {
@@ -514,18 +514,18 @@
                 $("#AccountIdShow").text(accountIdShow);
             }
         }
-        $("#ChangeAmountShow").text(res.changeAmount);
-        $("#RemarkShow").text(res.remark);
-        $("#DiscountShow").text(res.discount);
-        $("#DiscountMoneyShow").text(res.discountMoney);
-        $("#DiscountLastMoneyShow").text(res.discountLastMoney);
+        $("#ChangeAmountShow").text(res.changeAmount);//本次收款
+        $("#RemarkShow").text(res.remark);//单据备注
+        $("#DiscountShow").text(res.discount);//优惠率
+        $("#DiscountMoneyShow").text(res.discountMoney);//收款优惠
+        $("#DiscountLastMoneyShow").text(res.discountLastMoney);//优惠后金额
         var debt = 0;
         if(res.otherMoney){
             debt = (res.discountLastMoney+res.otherMoney-res.changeAmount).toFixed(2);
         } else {
             debt = (res.discountLastMoney-res.changeAmount).toFixed(2);
         }
-        $("#DebtShow").text(debt);
+        $("#DebtShow").text(debt);//本次欠款
         $("#AccountDayShow").text(res.accountDay);  //结算天数
         $("#LinkNumberShow").text(res.linkNumber); //关联订单号
         var otherMoney = res.otherMoney?res.otherMoney:0;
@@ -590,6 +590,7 @@
                     if(res && res.code === 200){
                         if(res.data) {
                             $("#SalesmanShow").text(res.data.names); //销售人员列表
+                            localStorage.setItem("names",res.data.names);
                         }
                     }
                 },
@@ -598,7 +599,13 @@
                 }
             });
         }
+        localStorage.setItem("res",JSON.stringify(res));
     }
+
+    //打印单据
+    $("#printDepotHeadShow").off("click").on("click",function(){
+        window.open("../../../js/print/salesOrderPrint.html","location:No;status:No;help:No;dialogWidth:800px;dialogHeight:600px;scroll:auto;");
+    });
     //初始化表格数据-商品列表-编辑状态
     function initTableData_material(type,TotalPrice) {
         var self = this;
@@ -820,6 +827,7 @@
                     });
                     data.footer = array;
                     $("#materialDataShow").datagrid('loadData', data);
+                    localStorage.setItem("tData",JSON.stringify(data));
                 }
             },
             error:function() {
